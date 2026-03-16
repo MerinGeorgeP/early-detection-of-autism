@@ -1,0 +1,17 @@
+{
+  "name": "autism-detector",
+  "version": "1.0.0",
+  "description": "Early Development Screening Tool for Autism",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'Static build complete'"
+  },
+  "keywords": ["autism", "screening", "health", "medical"],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
