@@ -60,18 +60,65 @@ const questionContainer = document.getElementById('questionContainer');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
-    // Set up navigation
-    setupNavigation();
-    
-    // Set up mobile menu
-    setupMobileMenu();
-    
-    // Set up scroll effects
-    setupScrollEffects();
-    
-    // Start with home page
-    showPage('home');
+    // Load i18n first
+    const i18nScript = document.createElement('script');
+    i18nScript.src = 'i18n.js';
+    i18nScript.onload = function() {
+        // Set up navigation
+        setupNavigation();
+        
+        // Set up mobile menu
+        setupMobileMenu();
+        
+        // Set up scroll effects
+        setupScrollEffects();
+        
+        // Set up language selector
+        setupLanguageSelector();
+        
+        // Start with home page
+        showPage('home');
+        
+        // Update UI with current language
+        i18n.updateUI();
+    };
+    document.head.appendChild(i18nScript);
 });
+
+// Language Selector Setup
+function setupLanguageSelector() {
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        const dropdown = document.getElementById('languageDropdown');
+        const button = document.querySelector('.language-btn');
+        
+        if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+}
+
+function toggleLanguageSelector() {
+    const dropdown = document.getElementById('languageDropdown');
+    dropdown.classList.toggle('show');
+}
+
+function changeLanguage(lang) {
+    i18n.setLanguage(lang);
+    
+    // Update questions array with new language
+    updateQuestionsArray();
+    
+    // Close dropdown
+    const dropdown = document.getElementById('languageDropdown');
+    dropdown.classList.remove('show');
+}
+
+function updateQuestionsArray() {
+    // Update the questions array from i18n
+    questions.length = 0; // Clear existing questions
+    questions.push(...i18n.translations[i18n.currentLanguage].questions);
+}
 
 // Mobile Menu Setup
 function setupMobileMenu() {
@@ -189,7 +236,7 @@ function showQuestion() {
         
         setTimeout(() => {
             questionText.textContent = questions[currentQuestion];
-            progressText.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            progressText.textContent = i18n.t('questionOf', { current: currentQuestion + 1, total: questions.length });
             
             // Update progress bar
             const progressPercentage = ((currentQuestion + 1) / questions.length) * 100;
@@ -248,24 +295,27 @@ function calculateScore() {
 function getRiskLevel(score) {
     if (score <= 3) {
         return {
-            level: 'Low Risk',
+            levelKey: 'lowRisk',
+            level: i18n.t('lowRisk'),
             color: 'var(--success-green)',
-            description: 'Your child shows few signs that may be associated with autism. Continue to monitor development and consult with your pediatrician during regular checkups.',
-            recommendation: 'Continue regular developmental monitoring and maintain open communication with your healthcare provider.'
+            description: i18n.t('lowRiskDescription'),
+            recommendation: i18n.t('lowRiskRecommendation')
         };
     } else if (score <= 7) {
         return {
-            level: 'Moderate Risk',
+            levelKey: 'moderateRisk',
+            level: i18n.t('moderateRisk'),
             color: 'var(--warning-yellow)',
-            description: 'Your child shows some signs that may be associated with autism. This warrants further evaluation by a healthcare professional.',
-            recommendation: 'Consider scheduling a developmental screening with your pediatrician or a developmental specialist for a comprehensive evaluation.'
+            description: i18n.t('moderateRiskDescription'),
+            recommendation: i18n.t('moderateRiskRecommendation')
         };
     } else {
         return {
-            level: 'High Risk',
+            levelKey: 'highRisk',
+            level: i18n.t('highRisk'),
             color: 'var(--danger-red)',
-            description: 'Your child shows several signs that may be associated with autism. Professional evaluation is strongly recommended.',
-            recommendation: 'Please consult with your pediatrician, child psychologist, or developmental specialist as soon as possible for a comprehensive assessment.'
+            description: i18n.t('highRiskDescription'),
+            recommendation: i18n.t('highRiskRecommendation')
         };
     }
 }
@@ -306,19 +356,19 @@ function showResults() {
         scoreCircle.style.background = `conic-gradient(
             ${riskLevel.color} 0deg,
             ${riskLevel.color} ${degrees}deg,
-            var(--border-light) ${degrees}deg
+            var(--neutral-200) ${degrees}deg
         )`;
         
         // Update risk level
-        scoreLabel.textContent = riskLevel.level;
+        scoreLabel.textContent = i18n.t(riskLevel.levelKey);
         scoreLabel.style.color = riskLevel.color;
         
         // Update explanation
         resultsExplanation.innerHTML = `
-            <h3>${riskLevel.level}</h3>
-            <p><strong>Score: ${score} out of ${questions.length}</strong></p>
+            <h3>${i18n.t(riskLevel.levelKey)}</h3>
+            <p><strong>${i18n.t('score')}: ${score} ${i18n.t('of')} ${questions.length}</strong></p>
             <p>${riskLevel.description}</p>
-            <p><strong>Recommendation:</strong> ${riskLevel.recommendation}</p>
+            <p><strong>${i18n.t('recommendation')}:</strong> ${riskLevel.recommendation}</p>
         `;
     }, 500);
 }
@@ -399,11 +449,24 @@ function downloadResults() {
     doc.setDrawColor(74, 144, 226); // Primary blue border
     doc.rect(20, 210, 170, 40);
     
-    doc.setFontSize(10);
-    doc.setTextColor(108, 117, 125); // Text light
-    const disclaimerText = 'Disclaimer: This screening tool is not a medical diagnosis. Please consult a qualified healthcare professional for evaluation.';
-    const splitDisclaimer = doc.splitTextToSize(disclaimerText, 160);
-    doc.text(splitDisclaimer, 25, 220);
+    // Create results text
+    const resultsText = `
+${i18n.t('resultsTitle')}
+===================================
+
+${i18n.t('date')}: ${new Date().toLocaleDateString()}
+${i18n.t('score')}: ${score} ${i18n.t('of')} ${questions.length}
+${i18n.t('riskLevel')}: ${riskLevel.level}
+
+${riskLevel.description}
+
+${i18n.t('recommendation')}:
+${riskLevel.recommendation}
+
+${i18n.t('disclaimer')}: ${i18n.t('disclaimerFull')}
+    `;
+    const splitResultsText = doc.splitTextToSize(resultsText, 160);
+    doc.text(splitResultsText, 25, 220);
     
     // Footer
     doc.setFontSize(8);
