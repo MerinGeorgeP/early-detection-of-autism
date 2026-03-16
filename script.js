@@ -50,6 +50,7 @@ const riskIndicators = [
 let currentQuestion = 0;
 let answers = [];
 let screeningInProgress = false;
+let mobileMenuOpen = false;
 
 // DOM Elements
 const questionText = document.getElementById('questionText');
@@ -62,9 +63,71 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set up navigation
     setupNavigation();
     
+    // Set up mobile menu
+    setupMobileMenu();
+    
+    // Set up scroll effects
+    setupScrollEffects();
+    
     // Start with home page
     showPage('home');
 });
+
+// Mobile Menu Setup
+function setupMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (mobileMenuBtn && navLinks) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+    }
+}
+
+function toggleMobileMenu() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuOpen = !mobileMenuOpen;
+    
+    if (mobileMenuOpen) {
+        mobileMenuBtn.classList.add('active');
+        navLinks.style.display = 'flex';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '100%';
+        navLinks.style.left = '0';
+        navLinks.style.right = '0';
+        navLinks.style.background = 'white';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.padding = '1rem';
+        navLinks.style.boxShadow = 'var(--shadow-lg)';
+        navLinks.style.borderRadius = '0 0 var(--radius-lg) var(--radius-lg)';
+    } else {
+        mobileMenuBtn.classList.remove('active');
+        navLinks.style.display = '';
+        navLinks.style.position = '';
+        navLinks.style.top = '';
+        navLinks.style.left = '';
+        navLinks.style.right = '';
+        navLinks.style.background = '';
+        navLinks.style.flexDirection = '';
+        navLinks.style.padding = '';
+        navLinks.style.boxShadow = '';
+        navLinks.style.borderRadius = '';
+    }
+}
+
+// Scroll Effects
+function setupScrollEffects() {
+    const header = document.querySelector('.header');
+    
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+}
 
 // Navigation Setup
 function setupNavigation() {
