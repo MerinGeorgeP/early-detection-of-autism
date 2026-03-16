@@ -4,14 +4,16 @@
   "description": "Early Development Screening Tool for Autism",
   "main": "index.html",
   "scripts": {
-    "start": "python -m http.server 8000",
-    "dev": "python -m http.server 8000",
-    "build": "echo 'Static build complete'"
+    "start": "echo 'Static site - no server needed'",
+    "dev": "echo 'Static site - no server needed'",
+    "build": "echo 'Static build complete'",
+    "vercel-build": "echo 'Static build complete'"
   },
-  "keywords": ["autism", "screening", "health", "medical"],
+  "keywords": ["autism", "screening", "health", "medical", "static"],
   "author": "",
   "license": "MIT",
   "engines": {
     "node": ">=14.0.0"
-  }
+  },
+  "type": "module"
 }

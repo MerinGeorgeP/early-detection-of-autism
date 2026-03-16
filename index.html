@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Early Development Screening Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <h2>Early Screening Tool</h2>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#screening" class="nav-link">Screening</a>
+                <a href="#learn" class="nav-link">Learn About Autism</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="container">
+                <div class="hero">
+                    <div class="hero-content">
+                        <h1 class="hero-title">Early Development Screening Tool</h1>
+                        <p class="hero-subtitle">
+                            A simple questionnaire to help identify early signs of Autism Spectrum Disorder in children. 
+                            This screening tool is designed to assist parents in monitoring their child's development.
+                        </p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showPage('screening')">
+                                Start Screening
+                            </button>
+                            <button class="btn btn-secondary" onclick="showPage('learn')">
+                                Learn About Autism
+                            </button>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="illustration">
+                            <div class="parent-child-icon">
+                                <div class="parent"></div>
+                                <div class="child"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screening Questionnaire Page -->
+        <section id="screening" class="page">
+            <div class="container">
+                <div class="questionnaire-card">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Question 1 of 20</div>
+                    </div>
+
+                    <div class="question-container" id="questionContainer">
+                        <h2 class="question-text" id="questionText">Loading question...</h2>
+                        <div class="answer-buttons">
+                            <button class="btn btn-answer btn-yes" onclick="answerQuestion(true)">
+                                Yes
+                            </button>
+                            <button class="btn btn-answer btn-no" onclick="answerQuestion(false)">
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Page -->
+        <section id="results" class="page">
+            <div class="container">
+                <div class="results-card">
+                    <h2 class="results-title">Screening Results</h2>
+                    <div class="score-circle-container">
+                        <div class="score-circle" id="scoreCircle">
+                            <div class="score-inner">
+                                <div class="score-number" id="scoreNumber">0/20</div>
+                                <div class="score-label" id="scoreLabel">Risk Level</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="results-explanation" id="resultsExplanation">
+                        <p>Your screening results are being calculated...</p>
+                    </div>
+                    <div class="results-buttons">
+                        <button class="btn btn-primary" onclick="retakeScreening()">
+                            Retake Screening
+                        </button>
+                        <button class="btn btn-secondary" onclick="showPage('home')">
+                            Return to Home
+                        </button>
+                        <button class="btn btn-outline" onclick="downloadResults()">
+                            Download Results
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Educational Section -->
+        <section id="learn" class="page">
+            <div class="container">
+                <h2 class="page-title">Learn About Autism</h2>
+                <div class="education-grid">
+                    <div class="education-card">
+                        <div class="card-icon">🧠</div>
+                        <h3>What is Autism</h3>
+                        <p>
+                            Autism Spectrum Disorder (ASD) is a developmental disorder that affects communication, 
+                            social interaction, and behavior. It's called a "spectrum" because it affects people 
+                            in different ways and to varying degrees.
+                        </p>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">👁️</div>
+                        <h3>Early Signs</h3>
+                        <p>
+                            Early signs may include lack of eye contact, delayed speech, repetitive behaviors, 
+                            difficulty with social interactions, and intense focus on specific interests. 
+                            Early identification can lead to better outcomes.
+                        </p>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">👨‍⚕️</div>
+                        <h3>When to Consult a Doctor</h3>
+                        <p>
+                            If you notice developmental delays, loss of previously acquired skills, or concerns 
+                            about your child's social communication, consult with your pediatrician or a developmental 
+                            specialist for a comprehensive evaluation.
+                        </p>
+                    </div>
+
+                    <div class="education-card">
+                        <div class="card-icon">📚</div>
+                        <h3>Parent Resources</h3>
+                        <p>
+                            Connect with local autism support groups, early intervention services, and educational 
+                            resources. Many organizations provide guidance, therapy options, and community support 
+                            for families affected by autism.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About</h4>
+                    <p>This tool helps parents identify potential early signs of autism for professional evaluation.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">CDC Autism Information</a></li>
+                        <li><a href="#">Autism Speaks</a></li>
+                        <li><a href="#">Local Support Groups</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-disclaimer">
+                <p><strong>Disclaimer:</strong> This screening tool is not a medical diagnosis. Please consult a qualified healthcare professional for evaluation.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
