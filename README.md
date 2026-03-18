@@ -5,7 +5,7 @@ detection of autism spectrum indicators in infants and young children.
 
 ------------------------------------------------------------------------
 ## Website Link
-    https://autismdetector.vercel.app/
+  https://autismdetector.vercel.app/
 ## 🚀 Overview
 
 Early detection of autism can significantly improve developmental
