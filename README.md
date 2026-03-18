@@ -4,7 +4,8 @@ An AI-powered screening application designed to assist in the early
 detection of autism spectrum indicators in infants and young children.
 
 ------------------------------------------------------------------------
-
+## Website Link
+    https://autismdetector.vercel.app/
 ## 🚀 Overview
 
 Early detection of autism can significantly improve developmental
@@ -88,7 +89,7 @@ professional for diagnosis.
 
 ## 🛠 Tech Stack
 
--   **Frontend:** Streamlit / React\
+-   **Frontend:** React\
 -   **Backend:** Python\
 -   **Database (optional):** SQLite / Firebase
 
